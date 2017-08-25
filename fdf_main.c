@@ -77,12 +77,12 @@ typedef struct	s_env
 //
 // }
 
-void	print_map(t_env *env)
-{
-	int i = -1;
-	while (++i < env->max_pt)
-		printf("(%f, %f, %f)\n", env->point[i]->map->x, env->point[i]->map->y, env->point[i]->map->z);
-}
+// void	print_map(t_env *env)
+// {
+// 	int i = -1;
+// 	while (++i < env->max_pt)
+// 		printf("(%.3f, %.3f, %.3f)\n", env->point[i]->map->x, env->point[i]->map->y, env->point[i]->map->z);
+// }
 
 void	alloc_points(t_env *env, t_data ***out)
 {
@@ -101,7 +101,7 @@ void	alloc_points(t_env *env, t_data ***out)
 	*out = tmp;
 }
 
-void	map_points(t_env *env, char **tmp)
+void	map_points(t_env *env)
 {
 	t_data	**pt_map;
 	int		i;
@@ -116,7 +116,8 @@ void	map_points(t_env *env, char **tmp)
 			++j;
 		pt_map[i]->map->x = (float)((i % env->map_x) + 1);
 		pt_map[i]->map->y = (float)(j + 1);
-		pt_map[i]->map->z = (float)ft_atoi(tmp[i]);
+		pt_map[i]->map->z = (float)env->map[j][i % env->map_x];
+		//printf("point: %.3f\tnum[%d][%d]: %d\n", pt_map[i]->map->z, j, i % env->map_x, env->map[j][i]);
 	}
 	env->point = pt_map;
 }
@@ -136,54 +137,42 @@ void	line_to_map(int *in, char *line, int x)
 	}
 }
 
-void	print_arr(int **arr, int x, int y)
-{
-	int i = 0;
-	int j = 0;
-
-	while (i < y)
-	{
-		j = 0;
-		while (j < x)
-			printf("%d ", arr[i][j++]);
-		printf("\n");
-		i++;
-	}
-}
+// void	print_arr(int **arr, int x, int y)
+// {
+// 	int i = 0;
+// 	int j = 0;
+//
+// 	while (i < y)
+// 	{
+// 		j = 0;
+// 		while (j < x)
+// 			printf("%d ", arr[i][j++]);
+// 		printf("\n");
+// 		i++;
+// 	}
+// }
 
 void	read_map(int fd, t_env *env)
 {
 	char	*line;
-	//char	*tmp;
-	int		**map;
 	int		b;
 	int		i;
 
 	line = NULL;
-	//tmp = ft_strnew(BUFF_SIZE);
 	i = 0;
 	while ((b = get_next_line(fd, &line)) != 0)
 	{
-		printf("line\n");
 		if ((env->map_x && (int)ft_count_words(line, ' ') != env->map_x) || b == -1)
 			return ;
 		else if (!env->map_x)
 			env->map_x = (int)ft_count_words(line, ' ');
 		env->map_y++;
-		// i += ft_strlen(line) + 1;
-		// if (i > 99)
-		// 	ft_realloc(tmp, i);
-		// ft_strncat(tmp, line, ft_strlen(line));
-		// tmp[i] = ' ';
-		// printf("%s\n", line);
-		// free(line);
-		map = (int**)ft_realloc(env->map, sizeof(int*) * env->map_y);
-		map[env->map_y - 1] = (int*)ft_memalloc(sizeof(int) * env->map_x);
-		line_to_map(map[env->map_y - 1], line, env->map_x);
+		env->map = (int**)ft_realloc(env->map, sizeof(int*) * env->map_y);
+		env->map[env->map_y - 1] = (int*)ft_memalloc(sizeof(int) * env->map_x);
+		line_to_map(env->map[env->map_y - 1], line, env->map_x);
 	}
 	env->max_pt = env->map_x * env->map_y;
-	//map_points(env, ft_strsplit(tmp, ' '));
-	//free(tmp);
+	map_points(env);
 }
 
 int		main(int ac, char **av)
@@ -200,7 +189,7 @@ int		main(int ac, char **av)
 	// if (!env->map_x || !env->map_y)
 	// 	return (-1);
 	close(fd);
-	// print_map(env);
+	print_map(env);
 	// draw(env);
 	return (0);
 }
