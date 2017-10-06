@@ -61,9 +61,8 @@ int		press_key(int keycode, t_env *env)
 	if (keycode == KEY_X)
 		zero_var(env);
 	if (keycode == KEY_SP)
-	{
-		env->color = g_color[rand() % 256];
-	}
+		env->color = ((rand() % 256) << 16) | ((rand() % 256) << 8) |
+				(rand() % 256);
 	draw(env);
 	return (0);
 }

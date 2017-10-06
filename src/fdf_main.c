@@ -42,7 +42,8 @@ void	init_var(t_env *env)
 	if (!(env->color))
 	{
 		srand(time(NULL));
-		env->color = g_color[rand() % 256];
+		env->color = ((rand() % 256) << 16) | ((rand() % 256) << 8) |
+				(rand() % 256);
 	}
 }
 
