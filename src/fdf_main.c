@@ -52,7 +52,9 @@ int		main(int ac, char **av)
 	t_env	*env;
 
 	if (ac != 2)
-		exit_func(0, "Improper usage: Execute with One Map");
+		exit_func(0, "Usage: Execute with One Map");
+	if (ft_strlen(av[1]) < 4 || ft_strcmp(av[1] + ft_strlen(av[1]) - 4, ".fdf"))
+		exit_func(0, "Usage: File must be of type \".fdf\"");
 	if ((fd = open(av[1], O_RDONLY)) < 1)
 		exit_func(4, "Open Error");
 	env = ft_memalloc(sizeof(t_env));
