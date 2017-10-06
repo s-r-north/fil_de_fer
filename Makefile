@@ -2,7 +2,7 @@ NAME = fdf
 
 FLAGS = -Wall -Werror -Wextra
 
-LIBS = libs/minilibx_macos/libmlx.a\
+LIBS = libs/minilibx_macos_10.11/libmlx.a\
        libs/libft/libft.a
 
 SRCS = fdf_main.c
@@ -17,18 +17,18 @@ all: $(NAME)
 
 $(NAME):
 	@make -C libs/libft/
-	@make -C libs/minilibx_macos/
+	@make -C libs/minilibx_macos_10.11/
 	@gcc $(FLAGS) $(SRCS) -I$(INC) $(LIBS) $(FRAMEWORKS) -o $(NAME)
 
 clean:
 	@/bin/rm -f rm $(OFILES)
 	@make -C libs/libft/ clean
-	@make -C libs/minilibx_macos/ clean
+	@make -C libs/minilibx_macos_10.11/ clean
 
 fclean: clean
 	@/bin/rm -f rm $(NAME)
 	@make -C libs/libft/ fclean
-	@make -C libs/minilibx_macos/ fclean
+	@make -C libs/minilibx_macos_10.11/ fclean
 
 new:
 	@/bin/rm -f rm $(NAME)
