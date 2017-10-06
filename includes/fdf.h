@@ -1,5 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snorth <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/02/27 11:47:49 by snorth            #+#    #+#             */
+/*   Updated: 2017/08/11 19:58:06 by snorth           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FDF_H
-#define FDF_H
+# define FDF_H
 
 # include "../libs/libft/libft.h"
 # include "../libs/minilibx_macos/mlx.h"
@@ -30,53 +42,53 @@
 # define KEY_ESC 53
 # define KEY_SP 49
 
-typedef struct	s_xy
+typedef struct		s_xy
 {
-	float		x1;
-	float		x2;
-	float		y1;
-	float		y2;
-	float		dx;
-	float		dy;
-	float		slope;
-}				t_xy;
+	float			x1;
+	float			x2;
+	float			y1;
+	float			y2;
+	float			dx;
+	float			dy;
+	float			slope;
+}					t_xy;
 
-typedef struct	s_xyz
+typedef struct		s_xyz
 {
-	float		x;
-	float		y;
-	float		z;
-}				t_xyz;
+	float			x;
+	float			y;
+	float			z;
+}					t_xyz;
 
-typedef struct	s_data
+typedef struct		s_data
 {
-	t_xyz		*map;
-	t_xyz		*image;
-}				t_data;
+	t_xyz			*map;
+	t_xyz			*image;
+}					t_data;
 
-typedef struct	s_env
+typedef struct		s_env
 {
-	void		*mlx;
-	void		*win;
-	void		*img;
-	int			*data;
-	int			win_x;
-	int			win_y;
-	int			bpp;
-	int			e;
-	int			map_x;
-	int			map_y;
-	int			max_pt;
-	int			xoffset;
-	int			yoffset;
-	float		scale;
-	float		ax;
-	float		ay;
-	float		az;
-	float		zmult;
-	int			color;
-	t_data		**point;
-}				t_env;
+	void			*mlx;
+	void			*win;
+	void			*img;
+	int				*data;
+	int				win_x;
+	int				win_y;
+	int				bpp;
+	int				e;
+	int				map_x;
+	int				map_y;
+	int				max_pt;
+	int				xoffset;
+	int				yoffset;
+	float			scale;
+	float			ax;
+	float			ay;
+	float			az;
+	float			zmult;
+	int				color;
+	t_data			**point;
+}					t_env;
 
 const static int	g_color[256] =
 {
@@ -119,27 +131,27 @@ const static int	g_color[256] =
 	0xd0d0d0, 0xdadada, 0xe4e4e4, 0xeeeeee
 };
 
-void	numswap(t_xy *xy);
-void	slope_calc(t_xy *xy, t_env *env, int xy1, int xy2);
-void	negative_steep(t_xy *xy, t_env *env);
-void	negative_grad(t_xy *xy, t_env *env);
-void	positive_slope(t_xy *xy, t_env *env);
-void	line_draw(t_env *env, int x, int y);
-void	draw_image(t_env *env);
-void	align_map(t_env *env);
-void	draw(t_env *env);
-void	alloc_points(t_env *env, t_data ***out);
-void	map_points(t_env *env, int **map);
-void	line_to_map(int *in, char *line, int x);
-void	exit_func(int err, char *print);
-void	read_map(int fd, t_env *env);
-void	free_map(int ***map, int y);
-void	mlx_init_var(t_env *env);
-void	init_var(t_env *env);
-void	zero_var(t_env *env);
-void	key_angle_trans(int keycode, t_env *env);
-int		press_key(int keycode, t_env *env);
-int		release_key(int keycode, t_env *env);
-void	good_exit(t_env *env);
+void				numswap(t_xy *xy);
+void				slope_calc(t_xy *xy, t_env *env, int xy1, int xy2);
+void				negative_steep(t_xy *xy, t_env *env);
+void				negative_grad(t_xy *xy, t_env *env);
+void				positive_slope(t_xy *xy, t_env *env);
+void				line_draw(t_env *env, int x, int y);
+void				draw_image(t_env *env);
+void				align_map(t_env *env);
+void				draw(t_env *env);
+void				alloc_points(t_env *env, t_data ***out);
+void				map_points(t_env *env, int **map);
+void				line_to_map(int *in, char *line, int x);
+void				exit_func(int err, char *print);
+void				read_map(int fd, t_env *env);
+void				free_map(int ***map, int y);
+void				mlx_init_var(t_env *env);
+void				init_var(t_env *env);
+void				zero_var(t_env *env);
+void				key_angle_trans(int keycode, t_env *env);
+int					press_key(int keycode, t_env *env);
+int					release_key(int keycode, t_env *env);
+void				good_exit(t_env *env);
 
 #endif
